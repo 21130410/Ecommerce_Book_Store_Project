@@ -9,28 +9,28 @@ function Banner() {
                 <Carousel.Item interval={6000}>
                     <img
                         className="d-block w-100"
-                        src={require("../../../../utils/images/slide1.jpg")}
+                        src={require("../../assets/images/banner1.jfif")}
                         alt="First slide"
                     />
                 </Carousel.Item>
                 <Carousel.Item interval={6000}>
                     <img
                         className="d-block w-100"
-                        src={require("../../../../utils/images/slide2.jpg")}
+                        src={require("../../assets/images/banner2.jfif")}
                         alt="Second slide"
                     />
                 </Carousel.Item>
                 <Carousel.Item interval={6000}>
                     <img
                         className="d-block w-100"
-                        src={require("../../../../utils/images/slide3.jpg")}
+                        src={require("../../assets/images/banner3.jfif")}
                         alt="Third slide"
                     />
                 </Carousel.Item>
                 <Carousel.Item interval={6000}>
                     <img
                         className="d-block w-100"
-                        src={require("../../../../utils/images/slide4.jpg")}
+                        src={require("../../assets/images/banner4.jfif")}
                         alt="Fourth slide"
                     />
                 </Carousel.Item>
