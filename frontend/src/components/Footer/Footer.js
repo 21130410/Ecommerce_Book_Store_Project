@@ -1,96 +1,55 @@
 import "./Footer.css";
 import { Box, Container } from "@mui/material";
 import Logo from '../../assets/images/logo.png';
-import { Link } from "react-router-dom"; 
+import { Link } from "react-router-dom";
 
-function Footer(props) {
+function Footer() {
     return (
-        <footer>
+        <footer className="custom-footer">
             <Box>
                 <Container>
-                    <div className="footer__block">
-                        <div className="footer__block-maininfo1">
-                            <img src={Logo} alt="Logo Shop Sách Hay" className="footer-logo" />
-                            <h3 className="footer__title-info">
-                                <a href="/about-shop">Về Shop Sách Hay</a>
-                            </h3>
-                            <div className="block-maininfo">
-                                <div className="block-introduce">
-                                    <p className="text-introduce texts">
-                                        Shop chuyên cung cấp sách hay tại TP.HCM
-                                    </p>
-                                </div>
-                                <div className="block-contacts">
-                                    <p className="text-address texts">
-                                        <b>Địa chỉ: </b>
-                                        <span>
-                                            Số 6, phường Linh Trung, Tp.Thủ Đức, Tp. Hồ Chí Minh
-                                        </span>
-                                    </p>
-                                    <p className="text-phone texts">
-                                        <b>Điện thoại: </b>
-                                        <span>093 126 9904</span>
-                                    </p>
-                                    <p className="text-email texts">
-                                        <b>Email: </b>
-                                        <span>ShopSachHay@ShopSachHay.com</span>
-                                    </p>
-                                </div>
+                    <div className="footer-content">
+                        <div className="footer-section about">
+                            <img src={Logo} alt="Shop Sách Hay Logo" className="footer-logo" />
+                            <h4 className="footer-heading">
+                                <Link to="/about-shop">Giới thiệu về Shop</Link>
+                            </h4>
+                            <p className="footer-description">
+                                Chuyên cung cấp sách chất lượng tại khu vực TP.HCM.
+                            </p>
+                            <div className="footer-contact-info">
+                                <p><strong>Địa chỉ:</strong> 85 Lê Văn Sỹ, P.13 Quận Phú Nhuận, TPHCM</p>
+                                <p><strong>Điện thoại:</strong> 093 126 9904</p>
+                                <p><strong>Email:</strong> ShopSachHay@ShopSachHay.com</p>
                             </div>
                         </div>
-                        <div className="footer__block-maininfo2">
-                            <h3 className="footer__title-info">Hỗ trợ khách hàng</h3>
-                            <div className="block-maininfo">
-                                <ul className="list-helps">
-                                    <li className="text-helps">
-                                        <a>Giới thiệu</a>
-                                    </li>
-                                    <li className="text-helps">
-                                        <Link to="/policy">Chính sách bảo mật</Link>
-                                    </li>
-                                    <li className="text-helps">
-                                        <Link to="/contact">Liên hệ</Link>
-                                    </li>
-                                </ul>
-                            </div>
+
+                        <div className="footer-section links">
+                            <h4 className="footer-heading">Hướng dẫn & Chính sách</h4>
+                            <ul className="footer-link-list">
+                                <li><Link to="/about-us">Về chúng tôi</Link></li>
+                                <li><Link to="/policy">Chính sách bảo mật</Link></li>
+                                <li><Link to="/contact">Liên hệ hỗ trợ</Link></li>
+                            </ul>
                         </div>
-                        <div className="footer__block-maininfo3">
-                            <h3 className="footer__title-info">Chăm sóc khách hàng</h3>
-                            <div className="block-maininfo">
-                                <div className="contact-info">
-                                    <div className="contacts">
-                                        <p className="text-contact phone-contact">093 126 9904</p>
-                                        <p className="text-contact email-contact">
-                                            ShopSachHay@ShopSachHay.com
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <h3 className="footer__title-info footer__title-follows">
-                                Follow Us
-                            </h3>
-                            <div className="block-maininfo">
-                                <div className="list-follow">
-                                    <a className="block-follows" href="https://www.facebook.com/">
-                                        <i class="fa-brands fa-facebook-f"></i>
-                                    </a>
-                                    <a className="block-follows">
-                                        <i class="fa-brands fa-twitter"></i>
-                                    </a>
-                                    <a className="block-follows">
-                                        <i class="fa-brands fa-instagram"></i>
-                                    </a>
-                                    <a className="block-follows" href="https://www.youtube.com/">
-                                        <i class="fa-brands fa-youtube"></i>
-                                    </a>
-                                </div>
+
+                        <div className="footer-section support">
+                            <h4 className="footer-heading">Chăm sóc khách hàng</h4>
+                            <p>Hotline: 093 126 9904</p>
+                            <p>Email: ShopSachHay@ShopSachHay.com</p>
+
+                            <h4 className="footer-heading">Kết nối với chúng tôi</h4>
+                            <div className="social-icons">
+                                <a href="https://www.facebook.com/" target="_blank" rel="noreferrer"><i className="fa-brands fa-facebook-f"></i></a>
+                                <a href="#"><i className="fa-brands fa-twitter"></i></a>
+                                <a href="#"><i className="fa-brands fa-instagram"></i></a>
+                                <a href="https://www.youtube.com/" target="_blank" rel="noreferrer"><i className="fa-brands fa-youtube"></i></a>
                             </div>
                         </div>
                     </div>
-                    <div className="footer__copyright">
-                        <p className="text-copyright">
-                            Copyright © 2024 <a href="/">ShopSachHay</a>
-                        </p>
+
+                    <div className="footer-bottom">
+                        <p>© 2024 <Link to="/">ShopSachHay</Link>. All rights reserved.</p>
                     </div>
                 </Container>
             </Box>

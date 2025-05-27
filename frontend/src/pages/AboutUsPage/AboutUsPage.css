@@ -1,0 +1,52 @@
+.about-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: "Segoe UI", sans-serif;
+  color: #333;
+}
+
+.about-banner {
+  background-color: #0f1230;
+  color: white;
+  padding: 50px 20px;
+  text-align: center;
+  border-radius: 8px;
+  margin-bottom: 30px;
+}
+
+.about-banner h1 {
+  font-size: 2.5rem;
+  margin: 0;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.about-section {
+  background: #f9f9f9;
+  border-left: 5px solid #0f1230;
+  padding: 20px;
+  border-radius: 5px;
+  transition: box-shadow 0.3s ease;
+}
+
+.about-section:hover {
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.about-section h2 {
+  margin-bottom: 10px;
+  color: #0f1230;
+}
+
+.about-section ul {
+  padding-left: 20px;
+}
+
+.about-section li {
+  margin-bottom: 8px;
+}

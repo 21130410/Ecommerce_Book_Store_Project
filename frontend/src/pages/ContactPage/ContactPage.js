@@ -12,11 +12,11 @@ function ContactPage() {
                 </div>
                 <div className="contact-info-item">
                     <h3><i class="fa-solid fa-envelope"></i>Email</h3>
-                    <p>haianh123@gmail.com</p>
+                    <p>ShopSachHay@ShopSachHay.com</p>
                 </div>
                 <div className="contact-info-item">
                     <h3><i class="fa-solid fa-phone"></i>Số điện thoại</h3>
-                    <p>+84 933 901 917</p>
+                    <p>+84 93 126 9904</p>
                 </div>
             </div>
 

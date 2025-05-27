@@ -1,0 +1,13 @@
+.search-bar-autocomplete {
+    width: 1000px;
+}
+
+.search-bar-input {
+    background-color: white;
+    border-radius: 4px;
+}
+
+.search-icon {
+    cursor: pointer;
+    color: #555;
+}
