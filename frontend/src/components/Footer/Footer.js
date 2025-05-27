@@ -1,6 +1,7 @@
 import "./Footer.css";
 import { Box, Container } from "@mui/material";
-import Logo from '../../assets/images/logo.png'
+import Logo from '../../assets/images/logo.png';
+import { Link } from "react-router-dom"; 
 
 function Footer(props) {
     return (
@@ -45,13 +46,10 @@ function Footer(props) {
                                         <a>Giới thiệu</a>
                                     </li>
                                     <li className="text-helps">
-                                        <a>Chính sách đổi trả</a>
+                                        <Link to="/policy">Chính sách bảo mật</Link>
                                     </li>
                                     <li className="text-helps">
-                                        <a>Chính sách bảo mật</a>
-                                    </li>
-                                    <li className="text-helps">
-                                        <a>Liên hệ</a>
+                                        <Link to="/contact">Liên hệ</Link>
                                     </li>
                                 </ul>
                             </div>
