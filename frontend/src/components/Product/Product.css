@@ -1,0 +1,38 @@
+.product-info {
+  padding-bottom: 12px;
+  border-bottom: 1px solid grey;
+}
+
+.product-name {
+  font-size: 28px;
+  margin: 0 0 10px;
+}
+
+.product-description {
+  margin: 5px 0;
+  height: 80px;
+  color: #444;
+}
+
+.price-box {
+  padding: 20px;
+  background-color: #efefef;
+}
+
+.sale-price {
+  margin-right: 18px;
+  font-size: 33px;
+  font-weight: bold;
+  color: #222;
+}
+
+.original-price {
+  margin-right: 12px;
+  text-decoration: line-through;
+  color: gray;
+}
+
+.promotion-percent {
+  color: red;
+  font-weight: bold;
+}

@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import "./AddToCartBtn.css";
+import "./AddToCart.css";
 import { Button } from "@mui/material";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../../app/CartSlice";
+import { addToCart } from "../../store/CartSlice";
 
-const AddToCartBtn = ({ minValue = 1, maxValue = 100, product }) => {
+const AddToCart = ({ minValue = 1, maxValue = 100, product }) => {
   const [quantity, setCount] = useState(minValue);
   const dispatch = useDispatch();
   const handleIncrementCounter = () => {
@@ -53,4 +53,4 @@ const AddToCartBtn = ({ minValue = 1, maxValue = 100, product }) => {
   );
 };
 
-export default AddToCartBtn;
+export default AddToCart;

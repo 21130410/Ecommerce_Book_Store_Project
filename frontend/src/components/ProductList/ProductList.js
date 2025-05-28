@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import ProductCard from "../ProductCard/ProductCard";
-import "./ProductList.css"; // Viết CSS ở đây
+import "./ProductList.css";
 
 ProductList.propTypes = {
     data: PropTypes.array,
