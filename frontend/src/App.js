@@ -12,6 +12,7 @@ import MainMenu from './components/MainMenu/MainMenu';
 import SignInPage from './pages/SignIn/SignInPage';
 import SignUpPage from './pages/SignUp/SignUpPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage/ForgotPasswordPage';
+import ProductsPage from './pages/ProductsPage/ProductsPage';
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUpPage />} />
+        <Route path="/products" element={<ProductsPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       </Routes>
       <Footer />

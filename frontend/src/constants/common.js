@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import categoryApi from '../api/categoryApi'
+import categoryApi from '../api/categoryApi';
 
 export const BASEURLHOST = "https://api.ezfrontend.com";
 export const THUMBNAIL_PLACEHOLDER =

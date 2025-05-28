@@ -4,7 +4,6 @@ import "./HomePage.css";
 import Banner from "../../components/Banner/Banner";
 import { Box, Container } from "@mui/material";
 import { CategoryContext } from "../../constants/common";
-// import Collection from "./components/Collection";
 
 export default function HomePage() {
     const categories = useContext(CategoryContext);
@@ -12,25 +11,9 @@ export default function HomePage() {
         <Box
             sx={{
                 bgcolor: "#f4f4f4",
+                paddingTop: 5,
             }}
         >
-            <div className="div__menu">
-                <div className="menu-list-items">
-                    <ul className="list-items">
-                        {categories &&
-                            categories.map((c) => (
-                                <li className="items">
-                                    <a
-                                        className="block-pages"
-                                        href={`/categories/${c.categoryName}`}
-                                    >
-                                        {c.categoryName}
-                                    </a>
-                                </li>
-                            ))}
-                    </ul>
-                </div>
-            </div>
             <Container>
                 <div className="contents">
                     <div className="carouselMain">
@@ -72,9 +55,6 @@ export default function HomePage() {
                             </div>
                         </div>
                     </div>
-                    {/* <div className="accessoryMain">
-                        <Collection categories={categories} />
-                    </div> */}
                 </div>
             </Container>
         </Box>

@@ -9,8 +9,6 @@ import { useContext } from "react";
 import './MainMenu.css';
 
 const MainMenu = () => {
-    const [suggestions, setSuggestions] = useState([]);
-    const [keyword, setKeyword] = useState("");
     const [menuAnchorEl, setMenuAnchorEl] = useState(null);
     const isMenuOpen = Boolean(menuAnchorEl);
 
@@ -58,7 +56,7 @@ const MainMenu = () => {
                     <Link to="/">Trang Chủ</Link>
                 </li>
                 <li className="menu-item">
-                    <Link to="/ProductsPage">Sản Phẩm</Link>
+                    <Link to="/Products">Sản Phẩm</Link>
                 </li>
                 <li className="menu-item">
                     <Link to="/about-us">Giới thiệu </Link>

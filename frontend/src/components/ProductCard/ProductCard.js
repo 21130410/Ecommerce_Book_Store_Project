@@ -6,10 +6,10 @@ import { Card } from "react-bootstrap";
 import { IconButton } from "@mui/material";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
-import { BASEURLHOST, THUMBNAIL_PLACEHOLDER } from "../../../constants";
-import { formatPrice } from "../../../utils";
-import { favouritesSelector } from "../../../app/Selectors";
-import { setFavourite } from "../../../app/FavouriteSlice";
+import { BASEURLHOST, THUMBNAIL_PLACEHOLDER } from "../../constants";
+import { formatPrice } from "../../utils/ultis";
+import { favouritesSelector } from "../../store/Selectors";
+import { setFavourite } from "../../store/FavouriteSlice";
 
 import "./ProductCard.css";
 
