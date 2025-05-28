@@ -1,108 +1,76 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 import Logo from "../../assets/images/logo2.png";
 import SearchBar from "../SearchBar/SearchBar";
 import productApi from "../../api/productApi";
-// import Menu from "@mui/material/Menu";
-// import MenuItem from "@mui/material/MenuItem";
-// import MenuIcon from "@mui/icons-material/Menu";
-// import { CategoryContext } from "../../constants/common";
-// import { useContext } from "react";
+import { logOut } from "../../store/UserSlice";
 import "./Header.css";
 
 export default function Header() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-    const [suggestions, setSuggestions] = useState([]);
-    const [keyword, setKeyword] = useState("");
+  const [suggestions, setSuggestions] = useState([]);
+  const [keyword, setKeyword] = useState("");
 
-    // const [menuAnchorEl, setMenuAnchorEl] = useState(null);
-    // const isMenuOpen = Boolean(menuAnchorEl);
+  const { userInfo, isAuthenticated } = useSelector((state) => state.user);
 
-    // const handleMenuOpen = (event) => {
-    //     setMenuAnchorEl(event.currentTarget);
-    // };
+  useEffect(() => {
+    if (!keyword) {
+      setSuggestions([]);
+      return;
+    }
 
-    // const handleMenuClose = () => {
-    //     setMenuAnchorEl(null);
-    // };
-
-
-    // const categories = useContext(CategoryContext);
-
-    useEffect(() => {
-        const fetchSuggestions = async () => {
-            if (!keyword) return;
-            try {
-                const res = await productApi.getProductNameSuggest(keyword);
-                setSuggestions(res);
-            } catch (error) {
-                console.error("Lỗi khi lấy gợi ý sản phẩm:", error);
-            }
-        };
-        fetchSuggestions();
-    }, [keyword]);
-
-    const goToHome = () => navigate("/");
-    const goToCart = () => navigate("/cart");
-    const goToLogin = () => navigate("/sign-in");
-
-    const handleInputChange = (value) => {
-        setKeyword(value);
+    const fetchSuggestions = async () => {
+      try {
+        const res = await productApi.getProductNameSuggest(keyword);
+        setSuggestions(res);
+      } catch (error) {
+        console.error("Lỗi khi lấy gợi ý sản phẩm:", error);
+      }
     };
 
-    const handleEnter = (value) => {
-        if (value.trim()) {
-            navigate(`/products/name/${value}`);
-        }
-    };
+    fetchSuggestions();
+  }, [keyword]);
 
-    return (
-        <header className="bookstore-header">
-            {/* <button className="category-button" onClick={handleMenuOpen}>
-                <MenuIcon />
-            </button> */}
-            <div className="logo" onClick={goToHome}>
-                <img src={Logo} alt="Shop Sách Hay Logo" className="header-logo" />
-                ShopSachHay
-            </div>
+  const handleInputChange = (value) => setKeyword(value);
 
+  const handleEnter = (value) => {
+    if (value.trim()) {
+      navigate(`/products/name/${value}`);
+    }
+  };
 
-            {/* <Menu
-                anchorEl={menuAnchorEl}
-                open={isMenuOpen}
-                onClose={handleMenuClose}
-                onClick={handleMenuClose}
-                PaperProps={{
-                    elevation: 2,
-                    sx: {
-                        mt: 1.5,
-                        minWidth: 180,
-                        filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.15))",
-                    },
-                }}
-                transformOrigin={{ horizontal: "left", vertical: "top" }}
-                anchorOrigin={{ horizontal: "left", vertical: "bottom" }}
-            >
-                {categories.map((c) => (
-                    <MenuItem onClick={handleMenuClose}>
-                        <a className="block-pages" href={`/categories/${c.categoryName}`}>
-                            {c.categoryName}
-                        </a>
-                    </MenuItem>
-                ))}
-            </Menu> */}
+  const handleLogout = () => {
+    dispatch(logOut());
+    navigate("/");
+  };
 
-            <SearchBar
-                list={suggestions}
-                onInputChange={handleInputChange}
-                onEnter={handleEnter}
-            />
+  return (
+    <header className="bookstore-header">
+      <div className="logo" onClick={() => navigate("/")}>
+        <img src={Logo} alt="Shop Sách Hay Logo" className="header-logo" />
+        ShopSachHay
+      </div>
 
-            <div className="header-actions">
-                <button onClick={goToCart}>🛒 Giỏ hàng</button>
-                <button onClick={goToLogin}>🔐 Đăng nhập</button>
-            </div>
-        </header>
-    );
+      <SearchBar
+        list={suggestions}
+        onInputChange={handleInputChange}
+        onEnter={handleEnter}
+      />
+
+      <div className="header-actions">
+        {!isAuthenticated ? (
+          <button onClick={() => navigate("/sign-in")}>🔐 Đăng nhập</button>
+        ) : (
+          <div className="user-info">
+            <span>Xin chào, {userInfo?.userName || "User"}</span>
+            <button onClick={() => navigate("/profile")}>Hồ sơ</button>
+            <button onClick={handleLogout}>Đăng xuất</button>
+          </div>
+        )}
+      </div>
+    </header>
+  );
 }
