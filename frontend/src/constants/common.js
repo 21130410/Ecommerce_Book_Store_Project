@@ -1,5 +1,5 @@
 import { createContext, useEffect, useState } from "react";
-import categoryApi from "../api/categoryApi";
+import categoryApi from '../api/categoryApi'
 
 export const BASEURLHOST = "https://api.ezfrontend.com";
 export const THUMBNAIL_PLACEHOLDER =
@@ -22,15 +22,13 @@ export const BLOGCONTENTS = {
 
 export const CategoryContext = createContext();
 
-// Tạo Provider
 export const CategoryProvider = (props) => {
     const [categories, setCategories] = useState([]);
 
     useEffect(() => {
         (async () => {
             try {
-                const list = await categoryApi.getProucts();
-                // console.log("cateee", list);
+                const list = await categoryApi.getProducts();
                 setCategories(list);
             } catch (error) {
                 console.log("Failed to fetch category list", error);

@@ -48,3 +48,17 @@
   font-size: 16px;
   cursor: pointer;
 }
+.category-button {
+    margin-left: 20px;
+    padding: 6px 12px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.category-button:hover {
+    background-color: #f0f0f0;
+}
