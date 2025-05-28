@@ -58,11 +58,7 @@ function ProductDetailPage() {
     }
 
     const { product } = useProductDetail(productId);
-    //   const commentsData = useComments(productId);
-    // console.log("commentsData: ",commentsData);
-    //   if (productLoading) {
-    //     return <Box>Loading</Box>;
-    //   }
+    console.log("product:", product);
 
     return (
         <Box className={classes.root}>
@@ -83,8 +79,7 @@ function ProductDetailPage() {
                 <Paper elevation={0}>
                     <Grid container>
                         <Grid item className={classes.left}>
-                            <div>{product.productName}</div>
-                            <img src={product.imageURL} />
+                            <img src={product.imageUrl} />
                         </Grid>
                         <Grid item className={classes.right}>
                             <Product product={product} />

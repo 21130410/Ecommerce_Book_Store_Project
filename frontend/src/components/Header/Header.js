@@ -51,6 +51,10 @@ export default function Header() {
     navigate("/cart");
   }
 
+  const goToFavoteriProduct = () => {
+    navigate("/favourite-products");
+  }
+
   return (
     <header className="bookstore-header">
       <div className="logo" onClick={() => navigate("/")}>
@@ -65,6 +69,7 @@ export default function Header() {
       />
 
       <div className="header-actions">
+        <button onClick={goToFavoteriProduct}>❤️</button>
         <button onClick={goToCart}>🛒 Giỏ hàng</button>
         {!isAuthenticated ? (
           <button onClick={() => navigate("/sign-in")}>🔐 Đăng nhập</button>
