@@ -19,6 +19,8 @@ import ProfilePage from './pages/ProfilePage/ProfilePage';
 import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
 import CategoryProductListPage from './pages/CategoryProductListPage/CategoryProductListPage';
 import ProductsByNamePage from './pages/ProductsByNamePage/ProductsByNamePage';
+import ThanksPage from './pages/ThanksPage/ThanksPage';
+import OrderHistoryPage from './pages/OrderHistoryPage/OrderHistoryPage';
 
 function App() {
   return (
@@ -40,6 +42,8 @@ function App() {
         <Route path="/categories/:categoryId" element={<CategoryProductListPage />} />
         <Route path="/products/name/:name" element={<ProductsByNamePage />} />
         <Route path="/products/:productId" element={<ProductDetailPage />} />
+        <Route path="/thanks" element={<ThanksPage />} />
+        <Route path="/order-history" element={<OrderHistoryPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       </Routes>
       <Footer />

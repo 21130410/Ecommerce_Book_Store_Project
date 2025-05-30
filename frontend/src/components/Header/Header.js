@@ -94,6 +94,7 @@ export default function Header() {
             {showMenu && (
               <div className="user-menu">
                 <button onClick={() => navigate("/profile")}>👤 Hồ sơ</button>
+                <button onClick={() => navigate("/order-history")}>📋 Lịch sử đặt hàng</button>
                 <button onClick={handleLogout}>🚪 Đăng xuất</button>
               </div>
             )}
