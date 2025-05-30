@@ -66,7 +66,6 @@ function CheckoutPage(props) {
         <Grid container>
           <Grid item className={classes.left}>
             <Box>
-              <Typography>SHOP PHU KIEN</Typography>
               <Box className={classes.breadcrumb}>
                 <Breadcrumbs maxItems={3} aria-label="breadcrumb">
                   <Link underline="hover" color="inherit" href="/">

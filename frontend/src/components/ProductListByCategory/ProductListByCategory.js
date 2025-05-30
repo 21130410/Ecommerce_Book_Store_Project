@@ -27,9 +27,18 @@ function ProductListByCategory() {
   if (loading) return <p>Đang tải sản phẩm...</p>;
   if (error) return <p>{error}</p>;
 
+  const categoryNames = {
+    '1': 'Sách thiếu nhi:',
+    '2': 'Sách văn học:',
+    '3': 'Sách lịch sử:',
+    '4': 'Tâm lý kỹ năng:',
+  };
+
+  const categoryTitle = categoryNames[categoryId] || `Danh mục ${categoryId}`;
+
   return (
     <div>
-      <h2>Sản phẩm trong danh mục {categoryId}</h2>
+      <h2>{categoryTitle}</h2>
       <ProductList data={products} />
     </div>
   );

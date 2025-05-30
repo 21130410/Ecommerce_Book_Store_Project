@@ -23,3 +23,4 @@ export const isAuthenticatedSelector = (state) => state.user.isAuthenticated;
 
 //favourite
 export const favouritesSelector = (state) => state.favourite.favouriteItems;
+

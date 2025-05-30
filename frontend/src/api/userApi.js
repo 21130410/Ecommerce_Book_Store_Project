@@ -59,6 +59,34 @@ const userApi = {
     const url = "/categories/products";
     return axiosClient.get(url);
   },
+
+  async getProfile() {
+    const url = "/users/profile";
+    try {
+      const response = await axiosClient.get(url);
+      return response;
+    } catch (error) {
+      console.error("Error fetching user profile:", error);
+      throw error;
+    }
+  },
+
+  async updateProfile(formData) {
+    const url = "/users/profile";
+    try {
+      const response = await axiosClient.put(url, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      return response;
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      throw error;
+    }
+  }
+
+
 };
 
 export default userApi;

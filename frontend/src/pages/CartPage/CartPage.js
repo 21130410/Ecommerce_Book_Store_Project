@@ -28,16 +28,6 @@ function Cart() {
     return (
         <Box className="cart-root">
             <Container>
-                {/* <Box className="cart-breadcrumb">
-                    <Breadcrumbs maxItems={2} aria-label="breadcrumb">
-                        <Link underline="hover" color="inherit" href="#">
-                            Trang chủ
-                        </Link>
-                        <Link underline="hover" color="inherit" href="#">
-                            Giỏ hàng
-                        </Link>
-                    </Breadcrumbs>
-                </Box> */}
 
                 {cart.length === 0 ? (
                     <Box

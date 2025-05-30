@@ -34,7 +34,7 @@ function ProductCard({ product }) {
 
     const toggleFavourite = (e) => {
         e.stopPropagation();
-        dispatch(setFavourite({ newItem: product }));
+        dispatch(setFavourite(product));
         setIsLiked((prev) => !prev);
     };
 
