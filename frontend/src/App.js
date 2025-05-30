@@ -18,17 +18,18 @@ import FavouriteProductsPage from './pages/FavouriteProductsPage/FavouriteProduc
 import ProfilePage from './pages/ProfilePage/ProfilePage';
 import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
 import CategoryProductListPage from './pages/CategoryProductListPage/CategoryProductListPage';
+import ProductsByNamePage from './pages/ProductsByNamePage/ProductsByNamePage';
 
 function App() {
   return (
-     <Router>
+    <Router>
       <Header />
       <MainMenu />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/about-us" element={<AboutUsPage />} />
-        <Route path="/policy" element={<PrivacyPolicyPage/>} />
+        <Route path="/policy" element={<PrivacyPolicyPage />} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/sign-in" element={<SignInPage />} />
         <Route path="/sign-up" element={<SignUp />} />
@@ -37,6 +38,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/cart/checkout" element={<CheckoutPage />} />
         <Route path="/categories/:categoryId" element={<CategoryProductListPage />} />
+        <Route path="/products/name/:name" element={<ProductsByNamePage />} />
         <Route path="/products/:productId" element={<ProductDetailPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       </Routes>

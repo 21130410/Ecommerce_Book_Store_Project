@@ -1,0 +1,26 @@
+.search-result-container {
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.search-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.search-title span {
+  color: #e74c3c;
+}
+
+.no-result {
+  font-size: 18px;
+  color: #888;
+  text-align: center;
+  margin-top: 40px;
+}

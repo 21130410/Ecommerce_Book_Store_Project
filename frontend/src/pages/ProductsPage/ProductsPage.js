@@ -20,8 +20,36 @@ function ProductsPage() {
   useEffect(() => {
     (async () => {
       try {
-        const { data, pagination } = await productApi.getProductsByCategory(filters);
-        setProducts(data);
+        setLoading(true);
+        const { data, pagination } = await productApi.getProductsByCategory({
+          ...filters,
+          sort: undefined,
+        });
+
+        console.log("Raw data from API:", data);
+
+        let sortedData = [...data];
+        switch (filters.sort) {
+          case "PRICE_ASC":
+            sortedData.sort((a, b) => a.discountedPrice - b.discountedPrice);
+            break;
+          case "PRICE_DESC":
+            sortedData.sort((a, b) => b.discountedPrice - a.discountedPrice);
+            break;
+          case "NAME_ASC":
+            sortedData.sort((a, b) => a.productName.localeCompare(b.productName));
+            break;
+          case "NAME_DESC":
+            sortedData.sort((a, b) => b.productName.localeCompare(a.productName));
+            break;
+          default:
+            break;
+        }
+
+
+        console.log("Sorted data:", sortedData);
+
+        setProducts(sortedData);
         setPagination({
           totalPages: pagination.totalPages,
           currentPage: pagination.currentPage,
@@ -32,6 +60,7 @@ function ProductsPage() {
       setLoading(false);
     })();
   }, [filters]);
+
 
   const handleSortChange = (newSort) => {
     setFilters((prev) => ({

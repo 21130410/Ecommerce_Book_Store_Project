@@ -61,6 +61,11 @@ const productApi = {
   getProductNameSuggest(suggest = "default") {
     const url = `/products/suggest/${suggest}`;
     return axiosClient.get(url);
+  },
+
+  searchProductsByName(name) {
+    const url = `/products/search?name=${encodeURIComponent(name)}`;
+    return axiosClient.get(url);
   }
 };
 
