@@ -9,12 +9,15 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage/PrivacyPolicyPage';
 import AboutUsPage from './pages/AboutUsPage/AboutUsPage';
 import CartPage from './pages/CartPage/CartPage';
 import MainMenu from './components/MainMenu/MainMenu';
-import SignInPage from './pages/SignIn/SignInPage';
-import SignUpPage from './pages/SignUp/SignUpPage';
+import SignInPage from './pages/SignInPage/SignInPage';
+import SignUp from './pages/SignUpPage/SignUpPage';
 import ForgotPasswordPage from './pages/ForgotPasswordPage/ForgotPasswordPage';
 import ProductsPage from './pages/ProductsPage/ProductsPage';
-import ProductDetail from './pages/ProductDetailPage/ProductDetailPage';
-import FavouriteProducts from './pages/FavouriteProducts/FavouriteProducts';
+import ProductDetailPage from './pages/ProductDetailPage/ProductDetailPage';
+import FavouriteProductsPage from './pages/FavouriteProductsPage/FavouriteProductsPage';
+import ProfilePage from './pages/ProfilePage/ProfilePage';
+import CheckoutPage from './pages/CheckoutPage/CheckoutPage';
+import CategoryProductListPage from './pages/CategoryProductListPage/CategoryProductListPage';
 
 function App() {
   return (
@@ -28,10 +31,13 @@ function App() {
         <Route path="/policy" element={<PrivacyPolicyPage/>} />
         <Route path="/cart" element={<CartPage />} />
         <Route path="/sign-in" element={<SignInPage />} />
-        <Route path="/sign-up" element={<SignUpPage />} />
+        <Route path="/sign-up" element={<SignUp />} />
         <Route path="/products" element={<ProductsPage />} />
-        <Route path="/favourite-products" element={<FavouriteProducts />} />
-        <Route path="/products/:productId" element={<ProductDetail />} />
+        <Route path="/favourite-products" element={<FavouriteProductsPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/cart/checkout" element={<CheckoutPage />} />
+        <Route path="/categories/:categoryId" element={<CategoryProductListPage />} />
+        <Route path="/products/:productId" element={<ProductDetailPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       </Routes>
       <Footer />

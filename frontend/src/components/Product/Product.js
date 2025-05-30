@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { formatPrice, promotionPercent} from '../../utils/ultis';
+import { formatPrice, promotionPercent } from '../../utils/ultis';
 import "./Product.css";
 
 function Product({ product = {} }) {
@@ -8,7 +8,7 @@ function Product({ product = {} }) {
 
   return (
     <div className="product-info">
-      <h1 className="product-name">{productName}</h1>
+      <p className="product-name">{productName}</p>
 
       <p className="product-description">{description}</p>
 

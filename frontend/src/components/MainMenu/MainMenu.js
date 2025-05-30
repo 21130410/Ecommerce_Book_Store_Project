@@ -45,7 +45,7 @@ const MainMenu = () => {
             >
                 {categories.map((c) => (
                     <MenuItem onClick={handleMenuClose}>
-                        <a className="block-pages" href={`/categories/${c.categoryName}`}>
+                        <a className="block-pages" href={`/categories/${c.categoryId}`}>
                             {c.categoryName}
                         </a>
                     </MenuItem>

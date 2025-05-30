@@ -1,6 +1,6 @@
 .product-card {
-    width: 14rem;
-    height: 26rem;
+    width: 17rem;
+    height: 25rem;
     margin-bottom: 12px;
     cursor: pointer;
     border-radius: 10px;
@@ -36,7 +36,6 @@
 }
 
 .product-name {
-    font-size: 15px;
     font-weight: 600;
     margin: 0;
 }

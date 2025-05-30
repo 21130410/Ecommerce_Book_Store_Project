@@ -45,7 +45,7 @@ function ProductCard({ product }) {
             </div>
             <Card.Body className="product-card-body">
                 <p className="product-brand">{product.brand}</p>
-                <h5 className="product-name">{product.productName}</h5>
+                <p className="product-name">{product.productName}</p>
                 <div className="product-pricing">
                     <span className="discounted">{formatPrice(product.discountedPrice)}</span>
                     <span className="original">{formatPrice(product.price)}</span>

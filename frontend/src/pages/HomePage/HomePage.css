@@ -1,0 +1,93 @@
+/* Container nội dung chung */
+.contents {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Banner + carousel */
+.carouselMain {
+  position: relative;
+}
+
+/* Service Section */
+.service-section {
+  background: #fff;
+  padding: 30px 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.05);
+}
+
+/* Tiêu đề section */
+.section-title {
+  font-weight: 700 !important;
+  color: #222;
+  margin-bottom: 20px !important;
+  border-left: 4px solid #1976d2;
+  padding-left: 10px;
+}
+
+/* Card ưu đãi từng dịch vụ */
+.service-card {
+  background: #fefefe;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
+  text-align: center;
+  transition: transform 0.3s ease;
+  cursor: default;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 16px rgb(0 0 0 / 0.15);
+}
+
+/* Icon fontawesome trong service */
+.service-icon {
+  font-size: 36px;
+  color: #1976d2;
+  margin-bottom: 12px;
+}
+
+/* Tiêu đề dịch vụ */
+.service-title {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #333;
+}
+
+/* Mô tả dịch vụ */
+.service-desc {
+  font-size: 14px;
+  color: #666;
+  line-height: 1.4;
+}
+
+/* ProductList container bên trong component ProductList */
+.product-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+/* Từng sản phẩm */
+.product-item {
+  flex: 1 1 calc(25% - 20px);
+  max-width: calc(25% - 20px);
+}
+
+/* Responsive cho sản phẩm */
+@media (max-width: 900px) {
+  .product-item {
+    flex: 1 1 calc(50% - 20px);
+    max-width: calc(50% - 20px);
+  }
+}
+
+@media (max-width: 600px) {
+  .product-item {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
+}

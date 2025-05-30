@@ -54,6 +54,18 @@ export default function Header() {
   const goToFavoteriProduct = () => {
     navigate("/favourite-products");
   }
+  const [showMenu, setShowMenu] = useState(false);
+
+  // Đóng dropdown khi click ra ngoài (tùy chọn nâng cao)
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".user-dropdown")) {
+        setShowMenu(false);
+      }
+    };
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
 
   return (
     <header className="bookstore-header">
@@ -69,18 +81,26 @@ export default function Header() {
       />
 
       <div className="header-actions">
-        <button onClick={goToFavoteriProduct}>❤️</button>
-        <button onClick={goToCart}>🛒 Giỏ hàng</button>
+        <button className="header-button" onClick={goToFavoteriProduct}>❤️ Yêu thích</button>
+        <button className="header-button" onClick={goToCart}>🛒 Giỏ hàng</button>
+
         {!isAuthenticated ? (
-          <button onClick={() => navigate("/sign-in")}>🔐 Đăng nhập</button>
+          <button className="header-button" onClick={() => navigate("/sign-in")}>🔐 Đăng nhập</button>
         ) : (
-          <div className="user-info">
-            <span>Xin chào, {userInfo?.userName || "User"}</span>
-            <button onClick={() => navigate("/profile")}>Hồ sơ</button>
-            <button onClick={handleLogout}>Đăng xuất</button>
+          <div className="user-dropdown">
+            <button className="user-toggle" onClick={() => setShowMenu(!showMenu)}>
+              👤 {userInfo?.userName || "User"} ▼
+            </button>
+            {showMenu && (
+              <div className="user-menu">
+                <button onClick={() => navigate("/profile")}>👤 Hồ sơ</button>
+                <button onClick={handleLogout}>🚪 Đăng xuất</button>
+              </div>
+            )}
           </div>
         )}
       </div>
+
     </header>
   );
 }

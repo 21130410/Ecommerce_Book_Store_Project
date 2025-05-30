@@ -14,6 +14,12 @@ const categoryApi = {
     const url = '/categories/products';
     return axiosClient.get(url);
   },
+
+  getProductsByCategory(categoryId) {
+    const url = `/categories/${categoryId}/products`;
+    return axiosClient.get(url);
+  }
+
 };
 
 export default categoryApi;

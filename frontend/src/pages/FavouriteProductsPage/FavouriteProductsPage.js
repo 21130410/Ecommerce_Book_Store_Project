@@ -7,9 +7,9 @@ import ProductList from "../../components/ProductList/ProductList";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { favouritesSelector } from "../../store/Selectors";
-import "./FavouriteProducts.css";
+import "./FavouriteProductsPage.css";
 
-function FavouriteProducts() {
+function FavouriteProductsPage() {
   const favourite = useSelector(favouritesSelector);
   const [productList, setProductList] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -82,4 +82,4 @@ function FavouriteProducts() {
   );
 }
 
-export default FavouriteProducts;
+export default FavouriteProductsPage;
