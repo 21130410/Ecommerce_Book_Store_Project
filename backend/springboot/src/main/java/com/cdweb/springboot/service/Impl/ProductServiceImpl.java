@@ -25,19 +25,23 @@ public class ProductServiceImpl implements ProductService{
 	public ProductServiceImpl(ProductRepository productRepository) {
 		this.productRepository = productRepository;
 	}
-	
+
+	@Override
+	public List<Product> getAllProducts() {
+		return productRepository.findAll(); // Lấy toàn bộ sản phẩm
+	}
 	@Override
 	public Product getProductById(Long id) {
 		// TODO Auto-generated method stub
 		Optional<Product> opt =productRepository.findById(id);
-		
+
 		if(opt.isPresent()) {
 			return opt.get();
 		}
 		return null;
 //		System.out.print("Product not found with id: "+id);
 	}
-	
+
 	@PostAuthorize("hasRole('SCOPE_ADMIN')")
 	@Override
 	public Page<Product> getListProductAdminByCategory(String category,Integer minPrice, Integer maxPrice,String sort, Integer page, Integer limit){

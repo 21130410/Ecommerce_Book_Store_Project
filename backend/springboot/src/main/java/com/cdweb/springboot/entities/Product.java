@@ -3,6 +3,8 @@ package com.cdweb.springboot.entities;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -46,9 +48,10 @@ public class Product {
 	@Column(name = "brand")
 	private String brand;
 	
-	@JsonManagedReference
+//	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "category_id")
+	@JsonBackReference
 	private Category category;
 	
 	 @CreatedDate

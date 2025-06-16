@@ -2,6 +2,7 @@ package com.cdweb.springboot.controller;
 
 import java.util.List;
 
+import com.cdweb.springboot.entities.Category;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -61,4 +62,10 @@ public class ProductController {
 		List<Product> products = productService.searchProductsByName(name);
 		return ResponseEntity.ok(products);
 	}
+	@GetMapping("/all")
+	public ResponseEntity<List<Product>> getAllProducts() {
+		List<Product> products = productService.getAllProducts();
+		return ResponseEntity.ok(products);
+	}
+
 }
