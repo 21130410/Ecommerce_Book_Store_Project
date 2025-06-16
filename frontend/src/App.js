@@ -21,15 +21,31 @@ import CategoryProductListPage from './pages/CategoryProductListPage/CategoryPro
 import ProductsByNamePage from './pages/ProductsByNamePage/ProductsByNamePage';
 import ThanksPage from './pages/ThanksPage/ThanksPage';
 import OrderHistoryPage from './pages/OrderHistoryPage/OrderHistoryPage';
-
+import AdminLayout from './admin/Components/AdminLayout/AdminLayout';
+import CustomerPage from "./admin/Pages/Customers/index";
+import DashboardPage from "./admin/Pages/Dashbaord/index";
+import OrdersPageAdmin from "./admin/Pages/Orders/index";
+import InventoryPage from "./admin/Pages/Inventory/index";
+import { useLocation } from 'react-router-dom'; // kiểm tra url
+function NoLayout({ children }) {
+    return <>{children}</>;
+}
 function App() {
+    const location = useLocation();
+    const isAdminRoute = location.pathname.startsWith("/admin");
   return (
-    <Router>
-      <Header />
-      <MainMenu />
+    <>
+        {!isAdminRoute && <Header />}
+        {!isAdminRoute && <MainMenu />}
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/contact" element={<ContactPage />} />
+          <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<DashboardPage />} />
+              <Route path="customers" element={<CustomerPage />} />
+              <Route path="orders" element={<OrdersPageAdmin />} />
+              <Route path="inventory" element={<InventoryPage />} />
+          </Route>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/contact" element={<ContactPage />} />
         <Route path="/about-us" element={<AboutUsPage />} />
         <Route path="/policy" element={<PrivacyPolicyPage />} />
         <Route path="/cart" element={<CartPage />} />
@@ -46,9 +62,10 @@ function App() {
         <Route path="/order-history" element={<OrderHistoryPage />} />
         <Route path="/forgot-password" element={<ForgotPasswordPage />} />
       </Routes>
-      <Footer />
-    </Router>
+        {!isAdminRoute && <Footer />}
+    </>
   );
 }
 
 export default App;
+

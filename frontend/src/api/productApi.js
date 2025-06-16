@@ -1,5 +1,7 @@
 import axiosClient from './axiosClient';
 
+
+
 const productApi = {
   async getProductsByCategory(params = {}) {
     const {
