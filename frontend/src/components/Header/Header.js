@@ -5,11 +5,14 @@ import Logo from "../../assets/images/logo2.png";
 import SearchBar from "../SearchBar/SearchBar";
 import productApi from "../../api/productApi";
 import { logOut } from "../../store/UserSlice";
+import { cartItemsCountSelector } from "../../store/Selectors";
+import { removeCart } from "../../store/CartSlice";
 import "./Header.css";
 
 export default function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const totalItems = useSelector(cartItemsCountSelector);
 
   const [suggestions, setSuggestions] = useState([]);
   const [keyword, setKeyword] = useState("");
@@ -44,6 +47,7 @@ export default function Header() {
 
   const handleLogout = () => {
     dispatch(logOut());
+     dispatch(removeCart());
     navigate("/");
   };
 
@@ -82,7 +86,8 @@ export default function Header() {
 
       <div className="header-actions">
         <button className="header-button" onClick={goToFavoteriProduct}>❤️ Yêu thích</button>
-        <button className="header-button" onClick={goToCart}>🛒 Giỏ hàng</button>
+        <button className="header-button" onClick={goToCart}>🛒 Giỏ hàng </button>
+        {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
 
         {!isAuthenticated ? (
           <button className="header-button" onClick={() => navigate("/sign-in")}>🔐 Đăng nhập</button>

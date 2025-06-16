@@ -1,4 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getUserId, saveCartToLocal } from './CartStorage';
+
+
+const getUserCartKey = (userId) => `cart_${userId || 'guest'}`;
+
+export const getCartFromLocal = (userId) => {
+  const key = getUserCartKey(userId);
+  const data = localStorage.getItem(key);
+  return data ? JSON.parse(data) : [];
+};
+
 const cartSlice = createSlice({
   name: 'cart',
   initialState: {
@@ -11,38 +22,45 @@ const cartSlice = createSlice({
       const index = state.cartItems.findIndex((x) => x.id === newItem.id);
 
       if (index >= 0) {
-        // increase quantity
         state.cartItems[index].quantity += newItem.quantity;
       } else {
-        // add to cart
         state.cartItems.push(newItem);
       }
+
+      const userId = getUserId();
+      if (userId) saveCartToLocal(userId, state.cartItems);
     },
+
 
     setQuantity(state, action) {
       const { id, quantity } = action.payload;
-      // check if product is available in cart
       const index = state.cartItems.findIndex((x) => x.id === id);
       if (index >= 0) {
         state.cartItems[index].quantity = quantity;
       }
     },
+
     removeCart(state) {
       state.cartItems = [];
-      console.log('state.cartItems', state.cartItems);
     },
 
     removeFromCart(state, action) {
       const { id } = action.payload;
       state.cartItems = state.cartItems.filter((x) => x.id !== id);
-      console.log('state.cartItems', state.cartItems);
     },
 
-
-
+    loadCartFromLocal(state, action) {
+      state.cartItems = action.payload || [];
+    },
   },
 });
 
 const { actions, reducer } = cartSlice;
-export const { showMiniCart, hideMiniCart, addToCart, setQuantity, removeFromCart, removeCart } = actions; // named export
-export default reducer; // default export
+export const {
+  addToCart,
+  setQuantity,
+  removeFromCart,
+  removeCart,
+  loadCartFromLocal,
+} = actions;
+export default reducer;

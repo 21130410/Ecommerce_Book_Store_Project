@@ -1,72 +1,60 @@
-.order-summary {
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.order-summary h2 {
-  font-size: 22px;
-  margin-bottom: 20px;
-  color: #222;
-}
-
-.product-table {
+table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  font-family: "Segoe UI", sans-serif;
 }
 
-.product-table thead th {
+thead {
+  background-color: #f7f7f7;
+}
+
+th, td {
+  padding: 12px 16px;
   text-align: left;
-  padding: 12px 8px;
-  border-bottom: 2px solid #ddd;
-  color: #555;
+}
+
+th {
   font-weight: 600;
-}
-
-.product-table tbody tr {
-  border-bottom: 1px solid #eee;
-  transition: background-color 0.3s ease;
-}
-
-.product-table tbody tr:hover {
-  background-color: #f9f9f9;
-}
-
-.product-thumbnail-image {
-  width: 70px;
-  height: 70px;
-  object-fit: cover;
-  border-radius: 6px;
-  box-shadow: 0 0 6px rgb(0 0 0 / 0.1);
-}
-
-.product-description-name {
-  font-weight: 700;
-  font-size: 16px;
-  color: #222;
-}
-
-.product-description-variant {
-  font-size: 13px;
-  color: #777;
-  margin-top: 4px;
-  display: block;
-}
-
-.product-quantity,
-.product-price {
-  padding: 10px 8px;
-  font-size: 15px;
   color: #333;
-  text-align: center;
+  font-size: 15px;
+}
+
+td {
+  font-size: 14px;
+  color: #555;
   vertical-align: middle;
 }
 
-.product-price span {
-  font-weight: 600;
-  color: #1976d2;
+tr:not(:last-child) {
+  border-bottom: 1px solid #eee;
+}
+
+.product-thumbnail-image {
+  width: 150px;
+  height: 250px;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.product-description-name {
+  font-weight: 500;
+  display: inline-block;
+  max-width: 300px;
+  word-break: break-word;
+}
+
+.product-quantity, .product-price {
+  font-weight: 500;
+}
+.product-name {
+  width: 90%;
+  max-width: 500px;
 }
 .result{
   color: red;

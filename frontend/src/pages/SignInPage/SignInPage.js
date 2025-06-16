@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import userApi from "../../api/userApi";
 import { logIn } from "../../store/UserSlice";
+import { getCartFromLocal, loadCartFromLocal } from "../../store/CartSlice";
+
 
 import "./SignInPage.css";
 
@@ -39,13 +41,20 @@ export default function SignInPage() {
           fullName: res.fullName,
           mobile: res.mobile,
           jwt: res.jwt,
+          role: res.role,
         };
 
         localStorage.setItem("token", res.jwt);
         localStorage.setItem("userInfo", JSON.stringify(userInfor));
 
         dispatch(logIn(userInfor));
-        navigate("/");
+        const cartFromLocal = getCartFromLocal(userInfor.id);
+        dispatch(loadCartFromLocal(cartFromLocal));
+        if (res.role === "ROLE_ADMIN") {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        };
       } else {
         setError("Đăng nhập thất bại: " + res.message);
       }

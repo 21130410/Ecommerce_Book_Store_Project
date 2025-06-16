@@ -22,7 +22,6 @@ import productApi from "../../api/productApi";
 const useStyles = makeStyles((theme) => ({
     root: { padding: "30px 0px", backgroundColor: "#f4f4f4" },
     left: {
-        width: "400px",
         padding: "12px",
         borderRight: "1px solid grey",
     },

@@ -101,7 +101,7 @@ public class UserController {
     @PostMapping("/sign-up")
     public ResponseEntity<AuthResponse> createUserHandler(@RequestBody User user) {
         if (userRepository.findByEmail(user.getEmail()) != null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse(null,null,null,null,null,null, "Email is already used"));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new AuthResponse(null,null,null,null,null,null,null, "Email is already used"));
         }
         
         System.out.println("user register: "+user);
@@ -114,7 +114,7 @@ public class UserController {
 //        SecurityContextHolder.getContext().setAuthentication(authentication);
 //
 //        String token = jwtProvider.generateToken(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(new AuthResponse(null,null,null,null,null,null, "Signup Success"));
+        return ResponseEntity.status(HttpStatus.CREATED).body(new AuthResponse(null,null,null,null,null,null,null, "Signup Success"));
     }
 
     @PostMapping("/sign-in")
@@ -130,16 +130,8 @@ public class UserController {
 //        saveToken(user, token);
         
         return ResponseEntity.status(HttpStatus.CREATED).body(new AuthResponse(user.getId(), user.getEmail(), user.getUserName(), user.getFullName(), 
-        		user.getMobile(), token,"Signin Success"));
+        		user.getMobile(), token,user.getRole(),"Signin Success"));
     }
-
-//	private void saveToken(User user, String token) {
-//		Token t = new Token();
-//        t.setRefreshToken(token);
-//        t.setLoggedOut(false);
-//        t.setUser(user);
-//        tokenRepository.save(t);
-//	}
 
     private Authentication authenticate(String email, String password) {
         UserDetails userDetails = userDetailsServiceImpl.loadUserByUsername(email);

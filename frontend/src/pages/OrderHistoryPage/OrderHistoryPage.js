@@ -1,53 +1,86 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import {
+    Table, TableBody, TableCell, TableContainer,
+    TableHead, TableRow, Paper, Typography, Box, IconButton,
+} from "@mui/material";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { useSelector } from "react-redux";
+import { userInfor } from "../../store/Selectors";
 import { formatPrice } from "../../utils/ultis";
-import "./OrderHistoryPage.css";
+import orderApi from "../../api/orderApi";
 
-function OrderHistoryPage() {
+function useOrder(userId) {
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
-        const orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
-        setOrders(orderHistory);
-    }, []);
+        if (!userId) return;
 
-    return (
-        <div className="order-history-container">
-            <h2 className="order-history-title">🧾 Lịch sử đơn hàng</h2>
-            {orders.length === 0 ? (
-                <p style={{ textAlign: "center" }}>Chưa có đơn hàng nào.</p>
-            ) : (
-                orders.map((order) => (
-                    <div key={order.id} className="order-card">
-                        <div className="order-info">
-                            <p><strong>Khách hàng:</strong> {order.customerName}</p>
-                            <p><strong>Email:</strong> {order.customerEmail}</p>
-                            <p><strong>Điện thoại:</strong> {order.customerMobile}</p>
-                            <p><strong>Địa chỉ:</strong> {order.address}</p>
-                            <p><strong>Phương thức thanh toán:</strong> {order.paymentMethod}</p>
-                            <p><strong>Tổng tiền:</strong> {order.total ? order.total.toLocaleString("vi-VN") + " ₫" : "0 ₫"}</p>
-                            <p><strong>Ngày đặt:</strong> {order.createdAt ? new Date(order.createdAt).toLocaleString() : "N/A"}</p>
-                            <p><strong>Trạng thái:</strong> <span className="order-status">{order.status || "Đã thanh toán"}</span></p>
-                        </div>
-                        <div>
-                            <strong>Sản phẩm:</strong>
-                            <ul className="order-items">
-                                {order.items?.map((item) => {
-                                    console.log("Item:", item);
-                                    return (
-                                        <li key={item.id}>
-                                            {item.productName} x {item.quantity} – {item.price} VND
-                                        </li>
-                                    );
-                                })}
-                            </ul>
+        (async () => {
+            try {
+                const res = await orderApi.get(userId);
+                setOrders(res);
+            } catch (error) {
+                console.log("Lỗi lấy danh sách đơn hàng:", error);
+            }
+        })();
+    }, [userId]);
 
-                        </div>
-                    </div>
-                ))
-            )}
-        </div>
-
-    );
+    return orders;
 }
 
-export default OrderHistoryPage;
+const OrderHistory = () => {
+    const user = useSelector(userInfor);
+    const orders = useOrder(user?.id);
+
+    const handleClickAccount = (orderId) => {
+        console.log(`View order with ID: ${orderId}`);
+    };
+
+    return (
+        <Box p={3}>
+            <Typography variant="h4" gutterBottom>
+                Lịch sử đặt hàng
+            </Typography>
+            <TableContainer component={Paper} sx={{ width: '100%', overflowX: 'auto', p: 1 }}>
+                <Table stickyHeader>
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>Mã đơn hàng</TableCell>
+                            <TableCell>Ngày đặt</TableCell>
+                            <TableCell>Phương thức thanh toán</TableCell>
+                            <TableCell>Trạng thái</TableCell>
+                            <TableCell>Tổng tiền</TableCell>
+                            <TableCell>Xem chi tiết</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {orders && orders.length > 0 ? (
+                            orders.map((order) => (
+                                <TableRow key={order.id}>
+                                    <TableCell>{order.id}</TableCell>
+                                    <TableCell>{order.date}</TableCell>
+                                    <TableCell>{order.paymentStatus}</TableCell>
+                                    <TableCell>{order.fulfillmentStatus}</TableCell>
+                                    <TableCell>{formatPrice(order.total)}</TableCell>
+                                    <TableCell>
+                                        <IconButton onClick={() => handleClickAccount(order.id)}>
+                                            <RemoveRedEyeIcon />
+                                        </IconButton>
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={6} align="center">
+                                    No orders found.
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Box>
+    );
+};
+
+export default OrderHistory;

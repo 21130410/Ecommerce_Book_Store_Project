@@ -78,9 +78,6 @@ function CheckoutPage() {
     }
   };
 
-
-
-
   return (
     <Box sx={{ backgroundColor: "#f5f5f5", padding: "20px 0" }}>
       <Container>
@@ -95,30 +92,46 @@ function CheckoutPage() {
             <Typography variant="h6" gutterBottom>
               Đơn hàng của bạn
             </Typography>
-            <tbody>
-              {cart.map((cartItem) => (
-                <tr key={cartItem.product.id}>
-                  <td className="product-image">
-                    <img
-                      className="product-thumbnail-image"
-                      alt={cartItem.product.productName}
-                      src={cartItem.product.imageUrl}
-                    />
-                  </td>
-                  <td>
-                    <span className="product-description-name">
-                      {cartItem.product.productName}
-                    </span>
-                  </td>
-                  <td className="product-quantity">{cartItem.quantity}</td>
-                  <td className="product-price">
-                    <span>
-                      {formatPrice(cartItem.quantity * cartItem.product.price)}
-                    </span>
-                  </td>
+            <table>
+              <colgroup>
+                <col style={{ width: "15%" }} />
+                <col style={{ width: "50%" }} />
+                <col style={{ width: "15%" }} />
+                <col style={{ width: "20%" }} />
+              </colgroup>
+              <thead>
+                <tr>
+                  <th>Hình ảnh</th>
+                  <th>Tên sản phẩm</th>
+                  <th>Số lượng</th>
+                  <th>Giá</th>
                 </tr>
-              ))}
-            </tbody>
+              </thead>
+              <tbody>
+                {cart.map((cartItem) => (
+                  <tr key={cartItem.product.id}>
+                    <td className="product-image">
+                      <img
+                        className="product-thumbnail-image"
+                        alt={cartItem.product.productName}
+                        src={cartItem.product.imageUrl}
+                      />
+                    </td>
+                    <td className="product-name">
+                      <span className="product-description-name">
+                        {cartItem.product.productName}
+                      </span>
+                    </td>
+                    <td className="product-quantity">{cartItem.quantity}</td>
+                    <td className="product-price">
+                      <span>
+                        {formatPrice(cartItem.quantity * cartItem.product.discountedPrice)}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
 
             <Typography variant="subtitle1" sx={{ mt: 2 }}>
               <p className="result">Tổng cộng: {formatPrice(orderTotal)}</p>

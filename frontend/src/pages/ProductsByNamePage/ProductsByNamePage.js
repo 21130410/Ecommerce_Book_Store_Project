@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import productApi from "../../api/productApi";
 import ProductList from "../../components/ProductList/ProductList";
-import "./ProductsByNamePage.css"; // Import file CSS mới
+import "./ProductsByNamePage.css";
 
 export default function ProductsByNamePage() {
   const { name } = useParams();
