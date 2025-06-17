@@ -26,7 +26,7 @@ import com.cdweb.springboot.response.OrderResponse;
 import com.cdweb.springboot.service.OrderService;
 
 @RestController
-@RequestMapping("/api/orders")
+@RequestMapping("/api/order")
 public class OrderController {
 
 	@Autowired

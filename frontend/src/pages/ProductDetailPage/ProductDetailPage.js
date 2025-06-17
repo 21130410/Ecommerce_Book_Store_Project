@@ -105,7 +105,7 @@ function ProductDetailPage() {
                     </Grid>
                 </Paper>
             </Container>
-            <Comment data={commentsData} />
+            {/* <Comment data={commentsData} /> */}
         </Box>
     );
 }
