@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     Box,
     Breadcrumbs,
@@ -7,17 +7,14 @@ import {
     Paper,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-// import useComments from "../../../hooks/useComments";
 import { Link, useMatch } from "react-router-dom";
 import Product from "../../components/Product/Product";
 import AddToCart from "../../components/AddToCart/AddToCart";
-import { useEffect, useState } from "react";
-import Comment from "../../components/Comment/Comment";
+import CommentSection from "../../components/Comment/Comment"; // Đổi tên import
 import commentApi from "../../api/commentApi";
 import productApi from "../../api/productApi";
 
-
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: { padding: "30px 0px", backgroundColor: "#f4f4f4" },
     left: {
         padding: "12px",
@@ -27,7 +24,6 @@ const useStyles = makeStyles((theme) => ({
     breadcrumb: { marginBottom: "20px" },
 }));
 
-
 function ProductDetailPage() {
     const classes = useStyles();
     const match = useMatch("/products/:productId");
@@ -35,47 +31,31 @@ function ProductDetailPage() {
         params: { productId },
     } = match;
 
-    function useProductDetail(productId) {
-        const [product, setProduct] = useState({});
-        const [loading, setLoading] = useState(false);
+    const [product, setProduct] = useState({});
+    const [comments, setComments] = useState([]);
 
-        useEffect(() => {
-            (async () => {
-                try {
-                    setLoading(true);
-                    const res = await productApi.get(productId);
-                    setProduct(res);
-                    setLoading(false);
-                } catch (error) {
-                    console.log('Loi lay chi tiet san pham', error);
-                }
-            })()
-        }, [productId])
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await productApi.get(productId);
+                setProduct(res);
+            } catch (error) {
+                console.log('Lỗi lấy chi tiết sản phẩm:', error);
+            }
+        })();
+    }, [productId]);
 
-        return { product, loading };
-    }
-
-    function useComments(productId) {
-        const [comments, setComments] = useState({});
-
-        useEffect(() => {
-            (async () => {
-                try {
-                    const res = await commentApi.getComments(productId);
-                    console.log('Loi lay ds comments', res);
-                    setComments(res);
-                } catch (error) {
-                    console.log('Loi lay ds comments', error);
-                }
-            })()
-        }, [productId])
-
-        return comments;
-    }
-
-    const { product } = useProductDetail(productId);
-    const commentsData = useComments(productId);
-    console.log("product:", product);
+    useEffect(() => {
+        (async () => {
+            try {
+                const res = await commentApi.getComments(productId);
+                console.log("Lấy danh sách bình luận:", res);
+                setComments(Array.isArray(res) ? res : []);
+            } catch (error) {
+                console.log("Lỗi lấy bình luận:", error);
+            }
+        })();
+    }, [productId]);
 
     return (
         <Box className={classes.root}>
@@ -93,10 +73,15 @@ function ProductDetailPage() {
                         </Link>
                     </Breadcrumbs>
                 </Box>
+
                 <Paper elevation={0}>
                     <Grid container>
                         <Grid item className={classes.left}>
-                            <img src={product.imageUrl} />
+                            <img
+                                src={product.imageUrl}
+                                alt={product.productName}
+                                style={{ maxWidth: "100%" }}
+                            />
                         </Grid>
                         <Grid item className={classes.right}>
                             <Product product={product} />
@@ -105,7 +90,9 @@ function ProductDetailPage() {
                     </Grid>
                 </Paper>
             </Container>
-            {/* <Comment data={commentsData} /> */}
+
+            {/* Hiển thị bình luận */}
+            <CommentSection data={comments} />
         </Box>
     );
 }

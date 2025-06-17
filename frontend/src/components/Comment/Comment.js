@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import {
     Box,
@@ -8,16 +8,14 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
-import { useState } from "react";
 import { useMatch } from "react-router-dom";
 import commentApi from "../../api/commentApi";
 import { useSelector } from "react-redux";
+import { userInfor } from "../../store/Selectors";
 import { userid } from "../../store/Selectors";
-Coment.propTypes = {
-    onSubmit: PropTypes.func,
-    commentsData: PropTypes.array,
-};
+import "./Comment.css";
 
+// Giao diện modal
 const style = {
     position: "absolute",
     top: "50%",
@@ -29,27 +27,20 @@ const style = {
     boxShadow: 24,
     p: 4,
 };
-const Comment = ({ comment, handleReplyComment }) => (
-    <Paper elevation={1} style={{ padding: "16px", marginBottom: "8px" }}>
-        <Typography variant="body1">
-            <strong>{comment.author}</strong>
-        </Typography>
-        <Typography variant="body2" color="textSecondary">
-            {comment.date}
-        </Typography>
-        <Typography variant="body1" style={{ marginTop: "8px" }}>
-            {comment.content}
-        </Typography>
-        <Button
-            style={{ marginTop: "8px" }}
-            onClick={() => handleReplyComment(comment.author, comment.id)}
-        >
+
+// Component hiển thị từng comment
+const CommentItem = ({ comment, handleReplyComment }) => (
+    <Paper className="comment-item">
+        <Typography className="comment-author">{comment.author}</Typography>
+        <Typography className="comment-date">{comment.date}</Typography>
+        <Typography className="comment-content">{comment.content}</Typography>
+        <Button className="comment-reply-button" onClick={() => handleReplyComment(comment.author, comment.id)}>
             Trả lời
         </Button>
-        {comment.replies && comment.replies.length > 0 && (
-            <Box marginTop={2}>
+        {comment.replies?.length > 0 && (
+            <Box className="comment-replies">
                 {comment.replies.map((reply, index) => (
-                    <Comment
+                    <CommentItem
                         key={index}
                         comment={reply}
                         handleReplyComment={handleReplyComment}
@@ -58,130 +49,133 @@ const Comment = ({ comment, handleReplyComment }) => (
             </Box>
         )}
     </Paper>
+
 );
-function Coment({ data }) {
+
+CommentItem.propTypes = {
+    comment: PropTypes.object.isRequired,
+    handleReplyComment: PropTypes.func.isRequired,
+};
+
+// Component chính: hiển thị và gửi bình luận
+function CommentSection({ data }) {
     const match = useMatch("/products/:productId");
-    const [open, setOpen] = useState(false);
-    const [author, setAuthor] = useState();
-    const [question, setQuestion] = useState("");
-    const [question1, setQuestion1] = useState("");
-    const [error, setError] = useState("");
-    const [error1, setError1] = useState("");
-    const userId = useSelector(userid);
-    const [commentsData, setCommentsData] = useState(data);
-    const [parentId, setParentId] = useState();
     const {
         params: { productId },
     } = match;
 
+    const user = useSelector(userInfor);
+    const userId = user?.id;
+    const userName = user?.userName|| "Ẩn danh";
+    // const userId = useSelector(userid);
+    const [commentsData, setCommentsData] = useState(data);
+    const [question, setQuestion] = useState("");
+    const [question1, setQuestion1] = useState("");
+    const [error, setError] = useState("");
+    const [error1, setError1] = useState("");
+    const [open, setOpen] = useState(false);
+    const [author, setAuthor] = useState("");
+    const [parentId, setParentId] = useState(null);
+
+    useEffect(() => {
+        setCommentsData(data);
+    }, [data]);
+
     const handleClose = () => setOpen(false);
-    const handleReplyComment = async (author, id) => {
+
+    const handleReplyComment = (author, id) => {
         setOpen(true);
         setAuthor(author);
         setParentId(id);
     };
+
     const handleInputChange = (event) => {
         setQuestion(event.target.value);
-        if (event.target.value) {
-            setError(""); // Xóa thông báo lỗi nếu người dùng nhập gì đó
-        }
+        if (event.target.value) setError("");
     };
+
     const handleInputChange1 = (event) => {
         setQuestion1(event.target.value);
-        if (event.target.value) {
-            setError1(""); // Xóa thông báo lỗi nếu người dùng nhập gì đó
-        }
+        if (event.target.value) setError1("");
     };
-    // console.log("data: ", data);
-    // setCommentsData(data);
-    // console.log("commentsData: ", commentsData);
 
     const handleSubmitComment = async () => {
-        console.log("coment");
         if (!question.trim()) {
             setError("Câu hỏi không được để trống");
             return;
         }
-        if (userId == null) {
+        if (!userId) {
             setError("Yêu cầu đăng nhập");
             return;
         }
         const commentData = {
             content: question,
-            productId: productId,
+            productId,
             parentCommentId: "",
-            userId: userId,
-            author: "Nguyen Van C",
+            userId,
+            author: userName,
         };
         try {
             const res = await commentApi.createComment(commentData);
             if (res.status === "success") {
-                try {
-                    const res = await commentApi.getComments(productId);
-                    setCommentsData(res); setQuestion("");
-                    console.log("Loi lay ds comments", res);
-                } catch (error) {
-                    console.log("Loi lay ds comments", error);
-                }
+                const updated = await commentApi.getComments(productId);
+                setCommentsData(updated);
+                setQuestion("");
             } else {
                 alert("Comment thất bại: " + res.message);
             }
         } catch (error) {
-            console.log("Lỗi đăng ký: ", error);
-            alert("Đã xảy ra lỗi trong quá trình đăng ký");
+            console.error("Lỗi đăng bình luận:", error);
+            alert("Đã xảy ra lỗi trong quá trình đăng bình luận");
         }
     };
+
     const handleSubmitReplyComment = async () => {
-        console.log("coment");
         if (!question1.trim()) {
-            setError1("Câu hỏi không được để trống");
+            setError1("Câu trả lời không được để trống");
             return;
         }
-        if (userId == null) {
+        if (!userId) {
             setError1("Yêu cầu đăng nhập");
             return;
         }
         const replyCommentData = {
             content: question1,
-            productId: productId,
+            productId,
             parentCommentId: "",
-            userId: userId,
-            author: "Nguyen Van C",
+            userId,
+            author: userName,
         };
-        console.log("parentId", parentId);
         try {
             const res = await commentApi.replyComment(parentId, replyCommentData);
             if (res.status === "success") {
-                try {
-                    const res = await commentApi.getComments(productId);
-                    setCommentsData(res); setQuestion1("");
-                    setOpen(false);
-                    setQuestion1("");
-                    console.log("Loi lay ds comments", res);
-                } catch (error) {
-                    console.log("Loi lay ds comments", error);
-                }
+                const updated = await commentApi.getComments(productId);
+                setCommentsData(updated);
+                setQuestion1("");
+                setOpen(false);
             } else {
                 alert("Comment thất bại: " + res.message);
             }
         } catch (error) {
-            console.log("Lỗi đăng ký: ", error);
-            alert("Đã xảy ra lỗi trong quá trình đăng ký");
+            console.error("Lỗi đăng trả lời:", error);
+            alert("Đã xảy ra lỗi trong quá trình đăng trả lời");
         }
     };
+
     return (
         <Box padding="24px 0px">
             <Box>
                 {commentsData &&
                     commentsData.map((comment, index) => (
-                        <Comment
+                        <CommentItem
                             key={index}
                             comment={comment}
                             handleReplyComment={handleReplyComment}
                         />
                     ))}
-                <Box marginTop={2}>
+                <Box className="comment-box">
                     <TextField
+                        className="comment-textfield"
                         label="Viết câu hỏi của bạn"
                         variant="outlined"
                         fullWidth
@@ -193,49 +187,48 @@ function Coment({ data }) {
                         helperText={error}
                     />
                     <Button
+                        className="comment-button"
                         variant="contained"
                         color="primary"
-                        style={{ marginTop: "8px" }}
                         onClick={handleSubmitComment}
                     >
                         Gửi câu hỏi
                     </Button>
                 </Box>
+
             </Box>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
-                    <Box marginTop={2}>
-                        <Typography>Trả lời "{author}"</Typography>
-                        <TextField
-                            label="Viết câu hỏi của bạn"
-                            variant="outlined"
-                            fullWidth
-                            multiline
-                            rows={4}
-                            value={question1}
-                            onChange={handleInputChange1}
-                            error={!!error1}
-                            helperText={error1}
-                            sx={{ marginTop: '5px' }}
-                        />
-                        <Button
-                            variant="contained"
-                            color="primary"
-                            style={{ marginTop: "8px" }}
-                            onClick={handleSubmitReplyComment}
-                        >
-                            Gửi câu hỏi
-                        </Button>
-                    </Box>
+            <Modal open={open} onClose={handleClose}>
+                <Box className="reply-modal">
+                    <Typography>Trả lời "{author}"</Typography>
+                    <TextField
+                        label="Viết câu trả lời của bạn"
+                        variant="outlined"
+                        fullWidth
+                        multiline
+                        rows={4}
+                        value={question1}
+                        onChange={handleInputChange1}
+                        error={!!error1}
+                        helperText={error1}
+                        sx={{ marginTop: '8px' }}
+                    />
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        style={{ marginTop: "8px" }}
+                        onClick={handleSubmitReplyComment}
+                    >
+                        Gửi trả lời
+                    </Button>
                 </Box>
             </Modal>
+
         </Box>
     );
 }
 
-export default Coment;
+CommentSection.propTypes = {
+    data: PropTypes.array.isRequired,
+};
+
+export default CommentSection;

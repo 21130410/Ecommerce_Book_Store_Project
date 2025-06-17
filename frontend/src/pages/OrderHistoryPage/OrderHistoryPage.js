@@ -38,10 +38,6 @@ const OrderHistory = () => {
         setExpandedOrderId(prev => prev === orderId ? null : orderId);
     };
 
-    // const handleClickAccount = (orderId) => {
-    //     console.log(`View order with ID: ${orderId}`);
-    // };
-
     return (
         <Box p={3}>
             <Typography variant="h4" gutterBottom>
@@ -53,7 +49,7 @@ const OrderHistory = () => {
                         <TableRow>
                             <TableCell className="label">Mã đơn hàng</TableCell>
                             <TableCell className="label">Ngày đặt</TableCell>
-                            <TableCell className="label">Phương thức thanh toán</TableCell>
+                            <TableCell className="label">Thanh toán</TableCell>
                             <TableCell className="label">Trạng thái</TableCell>
                             <TableCell className="label">Tổng tiền</TableCell>
                             <TableCell className="label">Xem chi tiết</TableCell>
