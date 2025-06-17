@@ -9,7 +9,6 @@ public class OrderDTO {
     private String customerEmail;
     private String customerMobile;
     private String shippingAddress;
-//    private String orderInfo;
     private int totalPrice;
     private String paymentTime;
     private int transactionId;
@@ -24,12 +23,6 @@ public class OrderDTO {
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
-//	public String getOrderInfo() {
-//		return orderInfo;
-//	}
-//	public void setOrderInfo(String orderInfo) {
-//		this.orderInfo = orderInfo;
-//	}
 	public String getCustomerName() {
 		return customerName;
 	}

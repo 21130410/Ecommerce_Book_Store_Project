@@ -99,7 +99,7 @@ public class Order {
 		return customerMobile;
 	}
 
-	public void getCustomerMobile(String customerMobile) {
+	public void setCustomerMobile(String customerMobile) {
 		this.customerMobile = customerMobile;
 	}
 

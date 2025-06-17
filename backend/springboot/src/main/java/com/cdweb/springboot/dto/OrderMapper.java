@@ -17,7 +17,7 @@ public class OrderMapper {
 		Order order = new Order();
         order.setCustomerName(dto.getCustomerName());
         order.setCustomerEmail(dto.getCustomerEmail());
-        order.getCustomerMobile(dto.getCustomerMobile());
+        order.setCustomerMobile(dto.getCustomerMobile());
 		order.setPaymentTime(dto.getPaymentTime());
 		order.setTransactionId(dto.getTransactionId());
 		order.setTotalPrice(dto.getTotalPrice());

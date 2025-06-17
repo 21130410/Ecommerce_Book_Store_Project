@@ -19,11 +19,6 @@ const defaultTheme = createTheme();
 
 export default function SignUp() {
   const [checked, setChecked] = useState(false);
-  // const [data, setData] = useState({
-  //   fullName: "",
-  //   email: "",
-  //   password: "",
-  // });
   const navigate = useNavigate();
 
   const handleCheckboxChange = (event) => {

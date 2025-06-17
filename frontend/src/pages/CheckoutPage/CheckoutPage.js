@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { cartSelector, cartTotalSelector } from "../../store/Selectors";
 import { formatPrice } from "../../utils/ultis";
 import paymentApi from "../../api/peymentApi";
+import orderApi from "../../api/orderApi";
 import "./CheckoutPage.css";
 
 function CheckoutPage() {
@@ -14,67 +15,48 @@ function CheckoutPage() {
   const navigate = useNavigate();
 
   const handleSubmitPayment = async (formData) => {
-    if (formData.paymentMethod === "VNPAY") {
-      try {
-        const orderItems = cart
-          .map((product) => `${product.id},${product.quantity}`)
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+    if (!user || !user.id) {
+      alert("Vui lòng đăng nhập trước khi thanh toán!");
+      return;
+    }
+
+    const orderData = {
+      userId: user.id,
+      customerName: formData.customerName,
+      customerEmail: formData.customerEmail,
+      customerMobile: formData.customerMobile,
+      shippingAddress: formData.address,
+      paymentTime: new Date().toISOString().replace(/[-:T.]/g, "").slice(0, 14),
+      transactionId: Math.floor(Math.random() * 1000000),
+      totalPrice: orderTotal,
+      paymentStatus: formData.paymentMethod === "VNPAY" ? 1 : 0,
+      orderStatus: 0,
+      orderItems: cart.map((item) => ({
+        productId: item.product.id,
+        quantity: item.quantity,
+      }))
+    };
+    console.log(orderData)
+
+    try {
+      await orderApi.create(orderData);
+
+      if (formData.paymentMethod === "VNPAY") {
+        const orderItemsStr = cart
+          .map((item) => `${item.product.id},${item.quantity}`)
           .join(";");
         const orderInfo = `${formData.customerName};${formData.customerEmail};${formData.customerMobile};${formData.address}`;
-        const combinedOrderInfo = `${orderInfo} orderItems:${orderItems}`;
+        const combinedOrderInfo = `${orderInfo} orderItems:${orderItemsStr}`;
 
         const res = await paymentApi.payment(orderTotal, combinedOrderInfo);
-
-        // Lưu đơn hàng vào localStorage
-        const orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
-        const newOrder = {
-          id: Date.now(),
-          customerName: formData.customerName,
-          customerEmail: formData.customerEmail,
-          customerMobile: formData.customerMobile,
-          address: formData.address,
-          paymentMethod: formData.paymentMethod,
-          items: cart.map((item) => ({
-            id: item.id,
-            productName: item.productName,
-            quantity: item.quantity,
-            price: item.discountedPrice,
-          })),
-          total: orderTotal,
-          createdAt: new Date().toISOString(),
-          paymentUrl: res.paymentUrl,
-        };
-        orderHistory.push(newOrder);
-        localStorage.setItem("orderHistory", JSON.stringify(orderHistory));
-
-        // chuyển hướng sang trang thanh toán
         window.location.href = res.paymentUrl;
-      } catch (error) {
-        console.error("Lỗi khi thanh toán:", error);
+      } else {
+        navigate("/thanks");
       }
-    } else if (formData.paymentMethod === "COD") {
-      const orderHistory = JSON.parse(localStorage.getItem("orderHistory")) || [];
-      const newOrder = {
-        id: Date.now(),
-        customerName: formData.customerName,
-        customerEmail: formData.customerEmail,
-        customerMobile: formData.customerMobile,
-        address: formData.address,
-        paymentMethod: formData.paymentMethod,
-        items: cart.map((item) => ({
-          id: item.id,
-          productName: item.productName,
-          quantity: item.quantity,
-          price: item.discountedPrice,
-        })),
-        total: orderTotal,
-        createdAt: new Date().toISOString(),
-        paymentUrl: null,
-        status: "Chờ giao hàng",
-      };
-      orderHistory.push(newOrder);
-      localStorage.setItem("orderHistory", JSON.stringify(orderHistory));
-
-      navigate("/thanks");
+    } catch (err) {
+      console.error("Lỗi lưu đơn hàng:", err);
+      alert("Có lỗi xảy ra khi lưu đơn hàng. Vui lòng thử lại.");
     }
   };
 

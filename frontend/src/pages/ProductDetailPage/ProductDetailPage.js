@@ -7,15 +7,13 @@ import {
     Paper,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-// import ProductThumbnail from "./components/ProductThumbnail";
-// import useProductDetail from "../../../hooks/useProductDetail";
 // import useComments from "../../../hooks/useComments";
 import { Link, useMatch } from "react-router-dom";
 import Product from "../../components/Product/Product";
-// import ProductTabs from "./components/ProductTabs";
-// import "./ProductDetail.css";
 import AddToCart from "../../components/AddToCart/AddToCart";
 import { useEffect, useState } from "react";
+import Comment from "../../components/Comment/Comment";
+import commentApi from "../../api/commentApi";
 import productApi from "../../api/productApi";
 
 
@@ -28,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
     right: { flex: "1 1 0", padding: "12px" },
     breadcrumb: { marginBottom: "20px" },
 }));
+
 
 function ProductDetailPage() {
     const classes = useStyles();
@@ -56,7 +55,26 @@ function ProductDetailPage() {
         return { product, loading };
     }
 
+    function useComments(productId) {
+        const [comments, setComments] = useState({});
+
+        useEffect(() => {
+            (async () => {
+                try {
+                    const res = await commentApi.getComments(productId);
+                    console.log('Loi lay ds comments', res);
+                    setComments(res);
+                } catch (error) {
+                    console.log('Loi lay ds comments', error);
+                }
+            })()
+        }, [productId])
+
+        return comments;
+    }
+
     const { product } = useProductDetail(productId);
+    const commentsData = useComments(productId);
     console.log("product:", product);
 
     return (
@@ -87,6 +105,7 @@ function ProductDetailPage() {
                     </Grid>
                 </Paper>
             </Container>
+            <Comment data={commentsData} />
         </Box>
     );
 }
